@@ -44,7 +44,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .content__visual-foundation {

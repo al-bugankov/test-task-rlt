@@ -8,7 +8,7 @@ import LandingPage from '@/views/LandingPage.vue'
   </header>
 
   <main>
-    <LandingPage />
+    <landing-page />
   </main>
 </template>
 
