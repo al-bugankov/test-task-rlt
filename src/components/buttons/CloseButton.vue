@@ -28,9 +28,7 @@
   height: 100%;
   padding-top: 14px;
   padding-right: 14px;
-}
-
-.icon-container:hover {
   cursor: pointer;
 }
+
 </style>

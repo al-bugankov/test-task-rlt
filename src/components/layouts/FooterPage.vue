@@ -6,7 +6,7 @@ import CloseButton from '@/components/buttons/CloseButton.vue'
 <template>
 <div class="content">
 <div class="skeleton-container">
-  <Skeleton class="custom-skeleton"  width="700px" height="36px"></Skeleton>
+  <Skeleton class="custom-skeleton" width="700px" height="36px"></Skeleton>
 </div>
 <close-button/>
 </div>
@@ -20,6 +20,7 @@ import CloseButton from '@/components/buttons/CloseButton.vue'
   display: flex;
   align-items: center;
   border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 }
 .skeleton-container {
   width: 740px;

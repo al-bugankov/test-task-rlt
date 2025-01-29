@@ -7,6 +7,7 @@ const appStore = useAppStore()
 
 const gridItems = 25;
 const gridFiller = ref(Array(gridItems))
+const draggedItem = ref(null);
 
 const savePositionToLocalStorage = () => {
   localStorage.setItem('gridImagesPosition', JSON.stringify(gridFiller.value));
@@ -43,10 +44,40 @@ const initializeData = (gridFiller) => {
   });
     console.log('инициализация прошла', gridFiller.value);
     savePositionToLocalStorage()
-  appStore.savePositionToLocalStorage(gridFiller.value)
     console.log('Записали в память')
   return gridFiller
 }
+
+const onDragStart = (item, event) => {
+  draggedItem.value = item;
+  event.dataTransfer.setData('text/plain', item.id);
+  event.currentTarget.classList.add('dragging');
+};
+
+const onDragEnd = (event) => {
+  event.currentTarget.classList.remove('dragging');
+  draggedItem.value = null;
+};
+
+const onDragOver = (event) => {
+  event.preventDefault();
+};
+
+const onDrop = (index) => {
+  if (draggedItem.value) {
+    const oldPosition = draggedItem.value.position - 1;
+    const newPosition = index;
+
+    if (!gridFiller.value[newPosition]) {
+      const newItem = { ...draggedItem.value, position: newPosition + 1 };
+      gridFiller.value[oldPosition] = null;
+      gridFiller.value[newPosition] = newItem;
+
+      appStore.showDialog = false;
+      savePositionToLocalStorage();
+    }
+  }
+};
 
 const showItem = (item) => {
   if (item) {
@@ -76,8 +107,16 @@ onMounted(() => {
           'bottom-left': index === 20,
           'bottom-right': index === 24
         }"
+        @dragover="onDragOver"
+        @drop="onDrop(index)"
       >
-        <div v-if="item && item.count > 0" class="grid-item__image-wrapper">
+        <div
+          v-if="item && item.count > 0"
+          class="grid-item__image-wrapper"
+          draggable="true"
+          @dragstart="onDragStart(item, $event)"
+          @dragend="onDragEnd"
+        >
           <img :src="item.image" alt="image" />
           <div class="grid-item__counter-wrapper">
             <span class="grid-item__counter">{{ item.count }}</span>
@@ -142,5 +181,18 @@ onMounted(() => {
 
 .grid-item.bottom-right {
   border-bottom-right-radius: var(--border-radius);
+}
+
+.grid-item__image-wrapper.dragging {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
