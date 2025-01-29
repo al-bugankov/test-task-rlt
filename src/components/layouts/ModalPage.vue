@@ -53,7 +53,7 @@ appStore.deleteItem(inputValue.value)
             </div>
           </div>
           <div v-else class="action-container__buttons">
-            <Button class="item__delete-button" @click="startEdit">Удалить предмет</Button>
+            <button class="item__delete-button" @click="startEdit">Удалить предмет</button>
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@ appStore.deleteItem(inputValue.value)
   background-color: white;
   color: black;
   border: 1px solid var(--border-color);
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .item__confirm-button {

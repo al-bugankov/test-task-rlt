@@ -14,10 +14,9 @@ const savePositionToLocalStorage = () => {
 }
 
 const loadFromLocalStorage = () => {
-  console.log('зашли в load')
+
   const saveData = localStorage.getItem('gridImagesPosition');
   if (saveData) {
-    console.log('saveData найдена')
     const parsedData = JSON.parse(saveData);
     // Отрисовываем объекты в другом месте при изменении данных в Local Storage вручную
     parsedData.forEach((item) => {
@@ -25,15 +24,12 @@ const loadFromLocalStorage = () => {
         gridFiller.value[item.position - 1] = item;
       }
     });
-    console.log('images.value после парса saveData', gridFiller.value);
     return
   }
-  console.log('saveData не найдена, идем в инициализацию')
   initializeData(gridFiller)
 }
 
 const initializeData = (gridFiller) => {
-  console.log('Пришли в инициализацию')
   const data = [
     { id: 1, image: '/cells/cell1.jpg', count: 4, position: 1 },
     { id: 2, image: '/cells/cell2.jpg', count: 2, position: 2 },
@@ -42,9 +38,7 @@ const initializeData = (gridFiller) => {
   data.forEach(obj => {
     gridFiller.value[obj.position - 1] = obj;
   });
-    console.log('инициализация прошла', gridFiller.value);
     savePositionToLocalStorage()
-    console.log('Записали в память')
   return gridFiller
 }
 
@@ -86,7 +80,6 @@ const showItem = (item) => {
 }
 
 onMounted(() => {
-  console.log('на старте',gridFiller.value)
   loadFromLocalStorage()
 })
 
